@@ -6,36 +6,36 @@
 /*   By: lcozdenm <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:12:51 by lcozdenm          #+#    #+#             */
-/*   Updated: 2022/11/21 16:36:06 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:07:35 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "args.h"
 
-e_args ft_toarg(char c)
+t_args ft_toarg(char c)
 {
-	if ('c')
+	if (c == 'c')
 		return (A_CHAR);
-	if ('s')
+	if (c == 's')
 		return (A_STR);
-	if ('p')
+	if (c == 'p')
 		return (A_PT);
-	if ('d')
+	if (c == 'd')
 		return (A_DEC);
-	if ('i')
+	if (c == 'i')
 		return (A_INT);
-	if ('u')
+	if (c == 'u')
 		return (A_UDEC);
-	if ('x')
+	if (c == 'x')
 		return (A_HEXLOW);
-	if ('X')
+	if (c == 'X')
 		return (A_HEXUP);
-	if ('%')
+	if (c == '%')
 		return (A_PERC);
 	return (A_NONE);
 }
-
-e_args	ft_argdect(char **s)
+/*
+t_args	ft_argdect(char **s)
 {
 	
-}
+}*/

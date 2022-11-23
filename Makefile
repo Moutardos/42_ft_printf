@@ -20,10 +20,12 @@ $(NAME) : $(OBJ)
 
 clean:
 	$(RM) $(OBJ)
+	$(MAKE) -C $(LIBFT) $@
 	
 fclean : clean
 	$(RM) $(NAME)
 	$(RM) test
+	$(MAKE) -C $(LIBFT) $@
 
 re: fclean all
 
