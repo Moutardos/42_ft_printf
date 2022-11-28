@@ -2,7 +2,7 @@ CC = cc
 AR= ar
 LIBFT = libft
 NAME = libftprint.a
-SRC = ft_printf.c
+SRC = ft_printf.c convert.c
 OBJ = $(SRC:.c=.o)
 RM = rm -f
 LIBFLAGS = -rc
@@ -15,7 +15,7 @@ all: $(NAME)
 
 $(NAME) : $(OBJ)
 	$(MAKE) -C $(LIBFT)
-	mv $(LIBFT)/$(LIBFT).a $(LIBFT).a
+	cp $(LIBFT)/$(LIBFT).a $(LIBFT).a
 	$(AR) $(LIBFLAGS) $(NAME) $(OBJ)
 
 clean:
