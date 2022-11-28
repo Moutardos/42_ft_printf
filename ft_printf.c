@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:12:51 by lcozdenm          #+#    #+#             */
-/*   Updated: 2022/11/28 18:04:39 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2022/11/28 18:44:36 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,17 @@ int	ft_print_group(const char **s, t_arg *arginfo)
 		char_printed = percent - *s;
 		*s += char_printed + 1;
 		ft_fill_arg(s, arginfo);
-		//char_printed += ft_print_arg()
-		char_printed+=1; //enleve
+		char_printed += ft_print_arg(arginfo);
 	}
 	return (char_printed);
 }
 
+int ft_print_arg(t_arg *arginfo)
+{
+	if (arginfo->ctype == A_DEC)
+		ft_putnbr_fd(va_arg(*(arginfo->ap), int), STDOUT);
+	return (1);
+}
 int	ft_printf(const char *s, ...)
 {
 	va_list	ap;
@@ -49,11 +54,12 @@ int	ft_printf(const char *s, ...)
 	arginfo = malloc(sizeof(t_arg));
 	arginfo->ap = &ap;
 	size = ft_print_group(&s, arginfo);
-	while(size)
+	while (size)
 	{
 		char_printed += size;
 		free(arginfo);
 		arginfo = malloc(sizeof(t_arg));
+		arginfo->ap = &ap;
 		size = ft_print_group(&s, arginfo);
 	}
 	return (char_printed);

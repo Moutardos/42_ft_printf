@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:07:21 by lcozdenm          #+#    #+#             */
-/*   Updated: 2022/11/28 17:05:16 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2022/11/28 18:22:05 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,46 @@
 # define FLAG_NB 6
 
 /* Array of flags, t_flags[flag] return 1 if the flag is set, else 0*/
-typedef int t_flags[FLAG_NB];
+typedef int		t_flags[6];
 
 /* Type of the argument, A_NONE if the character is not implemented*/
-typedef enum	e_atype
+typedef enum e_atype
 {
-	A_NONE, A_CHAR, A_STR, A_PT,
-	A_DEC, A_INT, A_UDEC,
-	A_HEXLOW, A_HEXUP, A_PERC
-} t_atype;
+	A_NONE,
+	A_CHAR,
+	A_STR,
+	A_PT,
+	A_DEC,
+	A_INT,
+	A_UDEC,
+	A_HEXLOW,
+	A_HEXUP,
+	A_PERC
+}	t_atype;
 
 /* Type of flag*/
-typedef enum	e_ftype
+typedef enum e_ftype
 {
-	F_NONE, F_MINUS, F_ZERO, F_DOT,
-	F_SHARP, F_SPACE, F_ADD
-} t_ftype;
+	F_NONE,
+	F_MINUS,
+	F_ZERO,
+	F_DOT,
+	F_SHARP,
+	F_SPACE,
+	F_ADD
+}	t_ftype;
 
 /* Regroup all the information known about the argument*/
-typedef struct	s_arg
+typedef struct s_arg
 {
 	t_atype		ctype;
 	t_flags		flags;
 	va_list		*ap;
 	const char	*ptr;
-} t_arg;
+}	t_arg;
 
 /* return the type linked to the character, return A_NONE if none found */
-t_atype ft_toarg(char c);
+t_atype	ft_toarg(char c);
 
 /* return the flagtype linked to the character, return F_NONE if none found */
 t_ftype	ft_get_ftype(char c);
