@@ -44,20 +44,24 @@ int	ft_fill_arg(const char **s, t_arg *arginfo)
 {
 	int		size;
 	t_ftype	ftype;
-
 	size = 0;
 	arginfo->ptr = *s;
 	ftype = ft_get_ftype(**s); 
+	size++;
 	while (ftype != F_NONE && **s)
 	{
 		arginfo->flags[ftype] = 1;
-		ftype = ft_get_ftype(*(*s)++);
+		ftype = ft_get_ftype(**s);
+		if (ftype == F_NONE)
+			break;
+		*s += 1;
 		size++;
 	}
 	if (**s)
 	{
-		arginfo->ctype = ft_get_atype(*(*s)++);
+		arginfo->ctype = ft_get_atype(**s);
 		size++;
+		*s += 1;
 	}
 	return (size);
 }

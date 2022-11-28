@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:12:51 by lcozdenm          #+#    #+#             */
-/*   Updated: 2022/11/28 18:44:36 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2022/11/28 20:19:36 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,36 @@ int	ft_print_group(const char **s, t_arg *arginfo)
 
 int ft_print_arg(t_arg *arginfo)
 {
-	if (arginfo->ctype == A_DEC)
-		ft_putnbr_fd(va_arg(*(arginfo->ap), int), STDOUT);
-	return (1);
+	char	*res;
+	char	*res_2;
+	int		wc;
+
+	if (arginfo->ctype == A_DEC || arginfo->ctype == A_INT)
+		wc = ft_putnbr_fd(va_arg(*(arginfo->ap), int), STDOUT);
+	if (arginfo->ctype == A_CHAR)
+		wc = ft_putchar_fd((unsigned char) va_arg(*(arginfo->ap), int), STDOUT);
+	if (arginfo->ctype == A_STR)
+		wc = ft_putstr_fd(va_arg(*(arginfo->ap), char *), STDOUT);
+	if (arginfo->ctype == A_HEXLOW || arginfo->ctype == A_HEXUP)
+	{
+		res = ft_itohexa(va_arg(*(arginfo->ap), int));
+		if (arginfo->ctype == A_HEXLOW)
+			wc = ft_putstr_fd(res, STDOUT);
+		if (arginfo->ctype == A_HEXUP)
+		{
+			res_2 = ft_strup(res);
+			wc = ft_putstr_fd(res_2, STDOUT);
+			free(res_2);
+		}
+		free(res);
+	}
+	return (wc);
 }
+/*
+int ft_print_arg2(t_arg *arginfo)
+{
+
+}	*/
 int	ft_printf(const char *s, ...)
 {
 	va_list	ap;
@@ -62,5 +88,7 @@ int	ft_printf(const char *s, ...)
 		arginfo->ap = &ap;
 		size = ft_print_group(&s, arginfo);
 	}
+	free(arginfo);
+	va_end(ap);
 	return (char_printed);
 }
