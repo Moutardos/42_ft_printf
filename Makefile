@@ -1,12 +1,12 @@
 CC = cc
 AR= ar
 LIBFT = libft
-NAME = libftprint.a
+NAME = libftprintf.a
 SRC = printf.c convert.c
 OBJ = $(SRC:.c=.o)
 RM = rm -f
 LIBFLAGS = -rc
-CFLAGS = -Wall -Wextra -Werror -o 
+CFLAGS = -Wall -Wextra -Werror 
 
 all: $(NAME)
 
@@ -14,10 +14,11 @@ all: $(NAME)
 $(NAME) : $(OBJ)
 	$(MAKE) -C $(LIBFT)
 	cp $(LIBFT)/$(LIBFT).a $(LIBFT).a
-	$(AR) $(LIBFLAGS) $(NAME) $(OBJ)
+	cp $(LIBFT).a $(NAME)
+	$(AR) $(LIBFLAGS) $(NAME) $(OBJ) 
 
 %.o : %.c
-	$(CC) $(CFLAGS) $@ -c $< 
+	$(CC) $(CFLAGS)  -o $@ -c $<
 
 clean:
 	$(RM) $(OBJ)
