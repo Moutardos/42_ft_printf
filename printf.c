@@ -6,13 +6,13 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:12:51 by lcozdenm          #+#    #+#             */
-/*   Updated: 2022/12/03 15:38:41 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2022/12/03 19:14:44 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "print.h"
 #include "libft/libft.h"
-
+int	ft_treat_flag(t_arg *arginfo);
 int	ft_print_group(const char **s, t_arg *arginfo)
 {
 	char	*percent;
@@ -36,8 +36,6 @@ int	ft_print_group(const char **s, t_arg *arginfo)
 	return (char_printed);
 }
 
-
-/* PROTEGER LES MALLOCS */
 int ft_print_arg(t_arg *arginfo)
 {
 	int		wc;
@@ -67,7 +65,7 @@ int ft_print_arg(t_arg *arginfo)
 }
 
 
-int ft_print_arg2(t_arg *arginfo)
+int ft_print_arg2(t_arg *arginfo) 
 {
 	int 	wc;
 	void	*res;
@@ -82,6 +80,8 @@ int ft_print_arg2(t_arg *arginfo)
 	else if (arginfo->ctype == A_PT)
 	{
 		res = va_arg(*(arginfo->ap), void *);
+		if (res == NULL)
+			return (ft_putstr_fd("(nil)", STDOUT));
 		wc += ft_putstr_fd("0x", STDOUT);
 		wc += ft_puthex_fd((size_t) res, STDOUT, sizeof(size_t), 0);
 	}
