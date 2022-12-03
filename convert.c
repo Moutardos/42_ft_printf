@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   convert.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lcozdenm <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/03 19:26:07 by lcozdenm          #+#    #+#             */
+/*   Updated: 2022/12/03 19:27:19 by lcozdenm         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "args.h"
 #include "stdio.h"
-t_atype ft_get_atype(char c)
+
+t_atype	ft_get_atype(char c)
 {
 	if (c == 'c')
 		return (A_CHAR);
@@ -38,22 +51,23 @@ t_ftype	ft_get_ftype(char c)
 	if (c == '+')
 		return (F_ADD);
 	return (F_NONE);
-
 }
+
 int	ft_fill_arg(const char **s, t_arg *arginfo)
 {
 	int		size;
 	t_ftype	ftype;
+
 	size = 0;
 	arginfo->ptr = *s;
-	ftype = ft_get_ftype(**s); 
+	ftype = ft_get_ftype(**s);
 	size++;
 	while (ftype != F_NONE && **s)
 	{
 		arginfo->flags[ftype] = 1;
 		ftype = ft_get_ftype(**s);
 		if (ftype == F_NONE)
-			break;
+			break ;
 		*s += 1;
 		size++;
 	}

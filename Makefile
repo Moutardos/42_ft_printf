@@ -28,6 +28,7 @@ fclean : clean
 	$(RM) $(NAME)
 	$(RM) test
 	$(MAKE) -C $(LIBFT) $@
+	$(RM) $(LIBFT).a
 
 re: fclean all
 

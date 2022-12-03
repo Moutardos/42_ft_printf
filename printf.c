@@ -6,13 +6,13 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:12:51 by lcozdenm          #+#    #+#             */
-/*   Updated: 2022/12/03 19:14:44 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2022/12/03 19:32:13 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "print.h"
+#include "ft_printf.h"
 #include "libft/libft.h"
-int	ft_treat_flag(t_arg *arginfo);
+
 int	ft_print_group(const char **s, t_arg *arginfo)
 {
 	char	*percent;
@@ -36,12 +36,12 @@ int	ft_print_group(const char **s, t_arg *arginfo)
 	return (char_printed);
 }
 
-int ft_print_arg(t_arg *arginfo)
+int	ft_print_arg(t_arg *arginfo)
 {
 	int		wc;
 	int		res;
+
 	wc = 0;
-	
 	if (arginfo->ctype == A_DEC || arginfo->ctype == A_INT)
 		wc = ft_putnbr_fd(va_arg(*(arginfo->ap), int), STDOUT);
 	else if (arginfo->ctype == A_CHAR)
@@ -64,19 +64,16 @@ int ft_print_arg(t_arg *arginfo)
 	return (wc);
 }
 
-
-int ft_print_arg2(t_arg *arginfo) 
+int	ft_print_arg2(t_arg *arginfo)
 {
-	int 	wc;
+	int		wc;
 	void	*res;
 
 	wc = 0;
 	if (arginfo->ctype == A_PERC)
 		wc = ft_putchar_fd('%', STDOUT);
 	else if (arginfo->ctype == A_UDEC)
-	{
 		wc = ft_putnbru_fd(va_arg(*(arginfo->ap), unsigned int), STDOUT);
-	}
 	else if (arginfo->ctype == A_PT)
 	{
 		res = va_arg(*(arginfo->ap), void *);
