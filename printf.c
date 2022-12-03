@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:12:51 by lcozdenm          #+#    #+#             */
-/*   Updated: 2022/11/30 10:49:03 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2022/12/03 15:38:41 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,26 @@ int	ft_print_group(const char **s, t_arg *arginfo)
 /* PROTEGER LES MALLOCS */
 int ft_print_arg(t_arg *arginfo)
 {
-	char	*res;
-	char	*res_2;
 	int		wc;
-
+	int		res;
 	wc = 0;
+	
 	if (arginfo->ctype == A_DEC || arginfo->ctype == A_INT)
 		wc = ft_putnbr_fd(va_arg(*(arginfo->ap), int), STDOUT);
 	else if (arginfo->ctype == A_CHAR)
-		wc = ft_putchar_fd((unsigned char) va_arg(*(arginfo->ap), int), STDOUT);
-	else if (arginfo->ctype == A_STR)
-		wc = ft_putstr_fd(va_arg(*(arginfo->ap), char *), STDOUT);
-	else if (arginfo->ctype == A_HEXLOW || arginfo->ctype == A_HEXUP)
 	{
-		res = ft_itohexa(va_arg(*(arginfo->ap), int));
-		if (arginfo->ctype == A_HEXLOW)
-			wc = ft_putstr_fd(res, STDOUT);
-		if (arginfo->ctype == A_HEXUP)
-		{
-			res_2 = ft_strup(res);
-			wc = ft_putstr_fd(res_2, STDOUT);
-			free(res_2);
-		}
-		free(res);
+		res = va_arg((*arginfo->ap), int);
+		wc = ft_putchar_fd(res, STDOUT);
+	}
+	else if (arginfo->ctype == A_HEXLOW)
+	{
+		res = va_arg(*(arginfo->ap), int);
+		wc = ft_puthex_fd(res, STDOUT, sizeof(int), 0);
+	}
+	else if (arginfo->ctype == A_HEXUP)
+	{
+		res = va_arg(*(arginfo->ap), int);
+		wc = ft_puthex_fd(res, STDOUT, sizeof(int), 1);
 	}
 	else
 		return (ft_print_arg2(arginfo));
@@ -73,18 +70,28 @@ int ft_print_arg(t_arg *arginfo)
 int ft_print_arg2(t_arg *arginfo)
 {
 	int 	wc;
+	void	*res;
 
 	wc = 0;
 	if (arginfo->ctype == A_PERC)
 		wc = ft_putchar_fd('%', STDOUT);
 	else if (arginfo->ctype == A_UDEC)
 	{
-		wc = ft_putnbr_fd(va_arg(*(arginfo->ap), unsigned int), STDOUT);
+		wc = ft_putnbru_fd(va_arg(*(arginfo->ap), unsigned int), STDOUT);
 	}
 	else if (arginfo->ctype == A_PT)
 	{
+		res = va_arg(*(arginfo->ap), void *);
 		wc += ft_putstr_fd("0x", STDOUT);
-		wc += ft_puthex_fd((size_t) va_arg(*(arginfo->ap), void *), STDOUT);
+		wc += ft_puthex_fd((size_t) res, STDOUT, sizeof(size_t), 0);
+	}
+	else if (arginfo->ctype == A_STR)
+	{
+		res = va_arg(*(arginfo->ap), char *);
+		if (res == NULL)
+			wc = ft_putstr_fd("(null)", STDOUT);
+		else
+			wc = ft_putstr_fd(res, STDOUT);
 	}
 	return (wc);
 }
