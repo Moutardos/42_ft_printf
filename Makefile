@@ -2,7 +2,7 @@ CC = cc
 AR= ar
 LIBFT = libft
 NAME = libftprintf.a
-SRC = printf.c convert.c
+SRC = ft_printf.c convert.c
 OBJ = $(SRC:.c=.o)
 RM = rm -f
 LIBFLAGS = -rc

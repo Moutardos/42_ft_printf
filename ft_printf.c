@@ -6,7 +6,7 @@
 /*   By: lcozdenm <lcozdenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:12:51 by lcozdenm          #+#    #+#             */
-/*   Updated: 2022/12/03 19:32:13 by lcozdenm         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:58:39 by lcozdenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,24 +97,26 @@ int	ft_printf(const char *s, ...)
 {
 	va_list	ap;
 	t_arg	*arginfo;
-	int		size;
 	int		char_printed;
 
+	arginfo = malloc(sizeof(t_arg));
+	if (!arginfo)
+		return (0);
 	char_printed = 0;
 	va_start(ap, s);
-	arginfo = malloc(sizeof(t_arg));
 	arginfo->ap = &ap;
-	size = ft_print_group(&s, arginfo);
-	char_printed += size;
+	char_printed += ft_print_group(&s, arginfo);
 	while (s != NULL)
 	{
 		free(arginfo);
 		arginfo = malloc(sizeof(t_arg));
+		if (!arginfo)
+			break ;
 		arginfo->ap = &ap;
-		size = ft_print_group(&s, arginfo);
-		char_printed += size;
+		char_printed += ft_print_group(&s, arginfo);
 	}
-	free(arginfo);
+	if (arginfo)
+		free(arginfo);
 	va_end(ap);
 	return (char_printed);
 }
